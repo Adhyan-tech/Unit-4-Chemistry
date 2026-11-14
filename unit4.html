@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Semiconductor Materials – Group 4</title>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600&display=swap">
+
+  <style>
+    /* ============ THEMES (colour variables) ============ */
+
+    /* Default (light) */
+    :root {
+      --bg: #f3f8fb;
+      --surf: #fff;
+      --text: #10222e;
+      --muted: #52677a;
+      --a1: #0a7ea4;
+      --a2: #f28f3b;
+      --a3: #7a5cff;
+      --line: #cfe0ea;
+      --on: #fff;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    /* If the computer is in dark mode and no theme is picked yet */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --bg: #0e1621;
+        --surf: #172434;
+        --text: #e8f1f8;
+        --muted: #9bb2c4;
+        --a1: #3cc4f0;
+        --a2: #ffb366;
+        --a3: #a08bff;
+        --line: #2a3f55;
+        --on: #06121c;
+      }
+    }
+
+    :root[data-theme=silicon] {
+      --bg: #f3f8fb;
+      --surf: #fff;
+      --text: #10222e;
+      --muted: #52677a;
+      --a1: #0a7ea4;
+      --a2: #f28f3b;
+      --a3: #7a5cff;
+      --line: #cfe0ea;
+      --on: #fff;
+    }
+
+    :root[data-theme=sunset] {
+      --bg: #fff3ea;
+      --surf: #fffaf6;
+      --text: #3a1626;
+      --muted: #7d5163;
+      --a1: #d6336c;
+      --a2: #ff922b;
+      --a3: #7048e8;
+      --line: #f3d3c0;
+      --on: #fff;
+    }
+
+    :root[data-theme=forest] {
+      --bg: #0f1d17;
+      --surf: #183026;
+      --text: #e6f4ea;
+      --muted: #9cc2ac;
+      --a1: #51d88a;
+      --a2: #f2d45c;
+      --a3: #4dd0e1;
+      --line: #2b4d3d;
+      --on: #07130d;
+    }
+
+    :root[data-theme=neon] {
+      --bg: #120a24;
+      --surf: #1d1238;
+      --text: #f3ecff;
+      --muted: #b3a3d6;
+      --a1: #ff4fd8;
+      --a2: #35f2e0;
+      --a3: #ffe14d;
+      --line: #3a2766;
+      --on: #14061f;
+    }
+
+    /* ============ BASE ============ */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(70px + env(safe-area-inset-top, 0px));
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 17px/1.65 Figtree, system-ui, sans-serif;
+      transition: background .4s, color .4s;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Bricolage Grotesque", Georgia, sans-serif;
+      line-height: 1.1;
+      margin: 0 0 .5em;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+    }
+
+    h3 {
+      font-size: 1.25rem;
+    }
+
+    /* ============ HEADER / NAV ============ */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--surf);
+      border-bottom: 2px solid var(--line);
+      padding: 10px 16px;
+      padding-top: calc(10px + env(safe-area-inset-top, 0px));
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      overflow-x: auto;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0 0 auto;
+      height: env(safe-area-inset-top, 0px);
+      background: var(--surf);
+      z-index: 30;
+    }
+
+    header b {
+      font-family: "Bricolage Grotesque", sans-serif;
+      white-space: nowrap;
+      color: var(--a1);
+    }
+
+    nav {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: 99px;
+      white-space: nowrap;
+      font-size: .9rem;
+    }
+
+    nav a:hover {
+      background: var(--a1);
+      color: var(--on);
+    }
+
+    /* Theme colour dots */
+    .themes {
+      display: flex;
+      gap: 8px;
+    }
+
+    .themes button {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 3px solid var(--surf);
+      outline: 2px solid var(--line);
+      cursor: pointer;
+    }
+
+    .themes button:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--a3);
+    }
+
+    /* ============ LAYOUT ============ */
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 0 18px;
+    }
+
+    section {
+      padding: 56px 0;
+    }
+
+    .hero {
+      padding-top: 36px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 9vw, 5.2rem);
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--a1), var(--a3), var(--a2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .card {
+      background: var(--surf);
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    /* Two-column layout (diagram + text) */
+    .demo {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      align-items: center;
+    }
+
+    @media (max-width: 720px) {
+      .demo {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ============ BUTTONS / CONTROLS ============ */
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .pills button,
+    .btn {
+      font: inherit;
+      font-weight: 600;
+      background: var(--surf);
+      color: var(--text);
+      border: 2px solid var(--line);
+      border-radius: 99px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .pills button[aria-pressed=true],
+    .btn:hover {
+      background: var(--a1);
+      color: var(--on);
+      border-color: var(--a1);
+    }
+
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--a1);
+    }
+
+    .stat {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: 2rem;
+      color: var(--a2);
+    }
+
+    /* ============ TIMELINE ============ */
+
+    .tl {
+      border-left: 4px solid var(--a1);
+      margin-left: 8px;
+      padding-left: 18px;
+    }
+
+    .tl div {
+      margin-bottom: 14px;
+    }
+
+    .tl b {
+      color: var(--a1);
+    }
+
+    /* ============ TABLE ============ */
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: .95rem;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+
+    th {
+      color: var(--a1);
+    }
+
+    .scroll {
+      overflow-x: auto;
+    }
+
+    /* ============ APPLICATION CARDS ============ */
+
+    .app {
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      color: var(--text);
+      width: 100%;
+    }
+
+    .app:hover {
+      border-color: var(--a2);
+    }
+
+    .app span {
+      display: none;
+      color: var(--muted);
+      margin-top: 6px;
+      font-size: .95rem;
+    }
+
+    .app.open span {
+      display: block;
+    }
+
+    .app.open {
+      border-color: var(--a1);
+    }
+
+    /* ============ QUIZ ============ */
+
+    .opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin: 6px 0;
+      font: inherit;
+      color: var(--text);
+      background: var(--bg);
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .opt.ok {
+      border-color: #2fb36b;
+      background: color-mix(in srgb, #2fb36b 22%, var(--bg));
+    }
+
+    .opt.no {
+      border-color: #e5484d;
+      background: color-mix(in srgb, #e5484d 22%, var(--bg));
+    }
+
+    /* ============ TEAM CHIPS / FOOTER ============ */
+
+    .chips span {
+      display: inline-block;
+      background: var(--surf);
+      border: 2px solid var(--line);
+      border-radius: 99px;
+      padding: 4px 12px;
+      margin: 4px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 30px 0 50px;
+    }
+
+    /* Respect "reduce motion" setting */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <!-- ============ TOP BAR ============ -->
+  <header>
+    <b>Semiconductors</b>
+
+    <nav>
+      <a href="#basics">Basics</a>
+      <a href="#bands">Band lab</a>
+      <a href="#doping">Doping</a>
+      <a href="#types">Types</a>
+      <a href="#pn">P-N junction</a>
+      <a href="#apps">Applications</a>
+      <a href="#fab">Making chips</a>
+      <a href="#quiz">Quiz</a>
+    </nav>
+
+    <div class="themes" id="themes"></div>
+  </header>
+
+
+  <main>
+
+    <!-- ============ HERO + BAND LAB ============ -->
+    <section class="hero" id="top">
+      <h1>Semiconductor materials</h1>
+
+      <p class="lead">
+        Basic introduction, types and applications. Group 4 – Materials presentation.
+        Play with the band lab below: drag the temperature and watch electrons jump the gap.
+      </p>
+
+      <div class="card demo" style="margin-top:22px">
+        <div>
+          <svg id="bandSvg" viewBox="0 0 400 330" role="img" aria-label="Energy band diagram"></svg>
+        </div>
+
+        <div>
+          <div class="pills" id="matPills"></div>
+
+          <label for="temp">Temperature: <b id="tv">300</b> K</label>
+          <input type="range" id="temp" min="100" max="700" value="300">
+
+          <p>Band gap Eg = <b id="egv"></b> eV</p>
+          <p class="stat" id="nv"></p>
+          <p id="mnote" style="color:var(--muted);margin:0"></p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============ 1. BASICS ============ -->
+    <section id="basics">
+      <h2>1. What is a semiconductor?</h2>
+
+      <p class="lead">
+        A material whose electrical conductivity sits between a conductor and an insulator,
+        and can be changed on purpose by doping, heat, light, or an electric field.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Conductivity</h3>
+          <p>Resistivity about 10⁻³ to 10⁸ Ω·cm. Metals are near 10⁻⁶; insulators above 10⁸.</p>
+        </div>
+        <div class="card">
+          <h3>Temperature</h3>
+          <p>Resistance falls as temperature rises (negative temperature coefficient), the opposite of metals.</p>
+        </div>
+        <div class="card">
+          <h3>Doping</h3>
+          <p>Adding about 1 impurity atom per 10⁷ host atoms can raise conductivity by a factor of 1000 or more.</p>
+        </div>
+        <div class="card">
+          <h3>Light and fields</h3>
+          <p>Photons create electron-hole pairs (photoconductivity); a gate voltage can switch current on and off.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:28px">Key concepts</h3>
+
+      <div class="grid">
+        <div class="card">
+          <b>Valence band</b><br>
+          Highest band filled with electrons at 0 K.
+        </div>
+        <div class="card">
+          <b>Conduction band</b><br>
+          Empty band above it where electrons move freely.
+        </div>
+        <div class="card">
+          <b>Band gap (Eg)</b><br>
+          Energy needed to lift an electron across. Si 1.12 eV, GaAs 1.42 eV.
+        </div>
+        <div class="card">
+          <b>Electron-hole pair</b><br>
+          A freed electron leaves a positive “hole” that also carries current.
+        </div>
+        <div class="card">
+          <b>Fermi level</b><br>
+          Energy with 50% occupation probability; sits mid-gap in intrinsic material.
+        </div>
+        <div class="card">
+          <b>Mobility and lifetime</b><br>
+          How fast carriers drift per unit field, and how long they survive before recombining.
+        </div>
+      </div>
+
+      <h3 style="margin-top:28px">Timeline</h3>
+
+      <div class="tl">
+        <div><b>1833</b> Faraday sees silver sulfide conductivity rise with heat.</div>
+        <div><b>1874</b> Braun discovers rectification at a metal-sulfide contact.</div>
+        <div><b>1947</b> Bardeen, Brattain and Shockley build the point-contact transistor at Bell Labs (Nobel Prize 1956).</div>
+        <div><b>1958</b> Jack Kilby builds the first integrated circuit (Nobel Prize 2000).</div>
+        <div><b>1971</b> Intel 4004: about 2,300 transistors. Modern chips hold tens of billions.</div>
+      </div>
+    </section>
+
+
+    <!-- ============ 2. BAND THEORY ============ -->
+    <section id="bands">
+      <h2>2. Band theory of solids</h2>
+
+      <p class="lead">
+        When atoms form a crystal, their energy levels merge into bands.
+        What the top bands look like decides the material’s type.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Conductor</h3>
+          <p>Bands overlap or the top band is half full. Eg ≈ 0. Example: Cu, Al.</p>
+        </div>
+        <div class="card">
+          <h3>Semiconductor</h3>
+          <p>Small gap, about 0.1 to 3 eV. Thermal energy kT ≈ 0.026 eV at 300 K excites a few carriers. Example: Si, Ge.</p>
+        </div>
+        <div class="card">
+          <h3>Insulator</h3>
+          <p>Large gap above about 4 eV. No carriers at room temperature. Example: diamond, SiO₂.</p>
+        </div>
+      </div>
+
+      <p>
+        Carrier density follows nᵢ ∝ T^(3/2) · exp(−Eg / 2kT).
+        That is why the hero demo shows more electrons when Eg is small or T is high.
+        Select “Copper” in the lab to see overlapping bands.
+      </p>
+
+      <p>
+        <b>Direct vs indirect gap:</b> in direct materials (GaAs, GaN) an electron can drop to the
+        valence band and emit a photon, so they make LEDs and lasers. In indirect materials (Si, Ge)
+        the transition also needs a phonon, so they emit little light but are cheap and easy to process.
+      </p>
+    </section>
+
+
+    <!-- ============ 3. DOPING ============ -->
+    <section id="doping">
+      <h2>3. Doping: intrinsic and extrinsic</h2>
+
+      <div class="pills" id="dopePills"></div>
+
+      <div class="card demo">
+        <div>
+          <svg id="dopeSvg" viewBox="0 0 400 330" role="img" aria-label="Doped band diagram"></svg>
+        </div>
+        <div id="dopeText"></div>
+      </div>
+    </section>
+
+
+    <!-- ============ 4. TYPES ============ -->
+    <section id="types">
+      <h2>4. Types and materials</h2>
+
+      <div class="pills" id="typePills"></div>
+
+      <div class="card scroll">
+        <table id="typeTable"></table>
+      </div>
+
+      <p style="color:var(--muted)">
+        Eg values at 300 K. Wide-bandgap (above about 2 eV) materials such as SiC and GaN
+        handle high voltage, high temperature and blue light.
+      </p>
+    </section>
+
+
+    <!-- ============ 5. P-N JUNCTION ============ -->
+    <section id="pn">
+      <h2>5. The P-N junction</h2>
+
+      <p class="lead">
+        Join p-type and n-type material and a depletion region forms.
+        Change the bias and see what happens.
+      </p>
+
+      <div class="pills" id="biasPills"></div>
+
+      <div class="card">
+        <svg id="pnSvg" viewBox="0 0 400 150" role="img" aria-label="P-N junction"></svg>
+        <p id="pnText" style="margin-bottom:0"></p>
+      </div>
+
+      <p>
+        Diode equation: I = I₀ (e^(qV/kT) − 1).
+        Silicon diodes start conducting near 0.7 V; Ge near 0.3 V.
+      </p>
+    </section>
+
+
+    <!-- ============ 6. APPLICATIONS ============ -->
+    <section id="apps">
+      <h2>6. Applications</h2>
+      <p style="color:var(--muted)">Tap a card to expand.</p>
+      <div class="grid" id="appGrid"></div>
+    </section>
+
+
+    <!-- ============ 7. FABRICATION ============ -->
+    <section id="fab">
+      <h2>7. From sand to chip</h2>
+
+      <div class="tl">
+        <div><b>Purify</b> Quartz sand (SiO₂) is reduced to metallurgical silicon, then refined to 99.9999999% (“nine nines”) electronic-grade silicon.</div>
+        <div><b>Grow</b> The Czochralski method pulls a single-crystal ingot from molten silicon on a rotating seed.</div>
+        <div><b>Slice</b> The ingot is sawn into wafers (up to 300 mm), then polished to a mirror finish.</div>
+        <div><b>Pattern</b> Photolithography transfers circuit patterns onto photoresist; EUV light (13.5 nm) prints the smallest features.</div>
+        <div><b>Dope</b> Ion implantation or diffusion places boron, phosphorus or arsenic in exact regions.</div>
+        <div><b>Build up</b> Oxidation, CVD, sputtering and etching add insulators and copper wiring layer by layer.</div>
+        <div><b>Package</b> The wafer is diced, each die is tested, wired and sealed.</div>
+      </div>
+    </section>
+
+
+    <!-- ============ 8. QUIZ ============ -->
+    <section id="quiz">
+      <h2>8. Test yourself</h2>
+      <div class="card" id="quizBox"></div>
+    </section>
+
+
+    <!-- ============ TEAM ============ -->
+    <section id="team">
+      <h2>Group 4</h2>
+
+      <div class="chips">
+        <span>Kirtika Rathi</span>
+        <span>Lakshya Hada</span>
+        <span>G Kishore</span>
+        <span>Somala Puram Shashank</span>
+        <span>Mathukumilli Jai Sudheesh</span>
+        <span>Khatheeb Shaik Abraar Hussain</span>
+        <span>Adhyan Chauhan</span>
+        <span>K Sanjay</span>
+        <span>Chirag Suthar</span>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>Semiconductor materials · Group 4 presentation</footer>
+
+
+  <script>
+    /* ============ HELPERS ============ */
+
+    const $ = s => document.querySelector(s);
+    const NS = "http://www.w3.org/2000/svg";
+
+
+    /* ============ THEME SWITCHER ============ */
+
+    const TH = [
+      ["silicon", "#0a7ea4"],
+      ["sunset", "#d6336c"],
+      ["forest", "#51d88a"],
+      ["neon", "#ff4fd8"]
+    ];
+
+    const tb = $("#themes");
+
+    TH.forEach(([n, c]) => {
+      const b = document.createElement("button");
+      b.style.background = c;
+      b.title = n;
+      b.setAttribute("aria-label", "Theme " + n);
+
+      b.onclick = () => {
+        document.documentElement.dataset.theme = n;
+        try {
+          localStorage.setItem("theme", n);
+        } catch (e) {}
+      };
+
+      tb.append(b);
+    });
+
+    // Restore the last chosen theme
+    try {
+      const t = localStorage.getItem("theme");
+      if (t) document.documentElement.dataset.theme = t;
+    } catch (e) {}
+
+
+    /* ============ PILL BUTTONS (reusable) ============ */
+
+    function pills(el, items, cb, start = 0) {
+      const box = $(el);
+
+      items.forEach((it, i) => {
+        const b = document.createElement("button");
+        b.textContent = it;
+        b.setAttribute("aria-pressed", i == start);
+
+        b.onclick = () => {
+          [...box.children].forEach(x => x.setAttribute("aria-pressed", "false"));
+          b.setAttribute("aria-pressed", "true");
+          cb(i);
+        };
+
+        box.append(b);
+      });
+
+      cb(start);
+    }
+
+
+    /* ============ BAND DIAGRAM DRAWING ============ */
+
+    function bands(svg, o) {
+      const gap = o.gap;
+      const gpx = Math.max(gap, 0) * 28;
+      const top = 30;
+      const cbH = 60;
+      const vbTop = top + cbH + (gap < 0 ? -26 : gpx);
+      const vbH = 70;
+
+      // Conduction band + valence band + labels
+      let h = `
+        <rect x="40" y="${top}" width="320" height="${cbH}" rx="8" fill="var(--a2)" opacity=".28"/>
+        <rect x="40" y="${vbTop}" width="320" height="${vbH}" rx="8" fill="var(--a1)" opacity=".28"/>
+        <text x="50" y="${top + 18}" fill="var(--text)" font-size="13">Conduction band</text>
+        <text x="50" y="${vbTop + vbH - 10}" fill="var(--text)" font-size="13">Valence band</text>`;
+
+      // Band gap marker
+      if (gap > 0) {
+        h += `
+          <line x1="200" y1="${top + cbH}" x2="200" y2="${vbTop}" stroke="var(--muted)" stroke-dasharray="4"/>
+          <text x="208" y="${(top + cbH + vbTop) / 2 + 4}" fill="var(--text)" font-size="13">Eg = ${gap} eV</text>`;
+      }
+
+      // Donor level (n-type)
+      if (o.donor) {
+        h += `
+          <line x1="60" y1="${top + cbH + 10}" x2="340" y2="${top + cbH + 10}" stroke="var(--a3)" stroke-width="2" stroke-dasharray="6"/>
+          <text x="64" y="${top + cbH + 26}" fill="var(--a3)" font-size="12">Donor level (just below CB)</text>`;
+      }
+
+      // Acceptor level (p-type)
+      if (o.acc) {
+        h += `
+          <line x1="60" y1="${vbTop - 12}" x2="340" y2="${vbTop - 12}" stroke="var(--a3)" stroke-width="2" stroke-dasharray="6"/>
+          <text x="64" y="${vbTop - 18}" fill="var(--a3)" font-size="12">Acceptor level (just above VB)</text>`;
+      }
+
+      // Fermi level
+      if (o.ef != null) {
+        h += `
+          <line x1="40" y1="${o.ef(top, cbH, vbTop)}" x2="360" y2="${o.ef(top, cbH, vbTop)}" stroke="var(--text)" stroke-width="1.5"/>
+          <text x="300" y="${o.ef(top, cbH, vbTop) - 4}" fill="var(--text)" font-size="12">E_F</text>`;
+      }
+
+      // Electrons (filled, animated) in the conduction band
+      for (let i = 0; i < o.e; i++) {
+        const x = 70 + (i * 53 % 260);
+        const y = top + 34 + (i * 37 % 22);
+
+        h += `
+          <circle cx="${x}" cy="${y}" r="6" fill="var(--a2)">
+            <animate attributeName="cx" values="${x};${x + 14};${x}" dur="${2 + i % 3}s" repeatCount="indefinite"/>
+          </circle>`;
+      }
+
+      // Holes (hollow) in the valence band
+      for (let i = 0; i < o.h; i++) {
+        const x = 80 + (i * 61 % 250);
+        const y = vbTop + 22 + (i * 29 % 26);
+
+        h += `<circle cx="${x}" cy="${y}" r="6" fill="none" stroke="var(--a1)" stroke-width="2.5"/>`;
+      }
+
+      svg.setAttribute("viewBox", `0 0 400 ${vbTop + vbH + 20}`);
+      svg.innerHTML = h;
+    }
+
+
+    /* ============ HERO BAND LAB ============ */
+
+    // [name, band gap in eV] (-1 means metal / overlapping bands)
+    const M = [
+      ["Germanium", .67],
+      ["Silicon", 1.12],
+      ["GaAs", 1.42],
+      ["GaN", 3.4],
+      ["Diamond", 5.5],
+      ["Copper", -1]
+    ];
+
+    const note = [
+      "Used in the first transistors; leaky above about 80 °C.",
+      "The workhorse of electronics: stable oxide, abundant.",
+      "Direct gap: efficient LEDs, lasers and solar cells.",
+      "Wide gap: blue LEDs (Nobel Prize 2014), fast chargers.",
+      "Insulator at room temperature; carriers need huge energy.",
+      "Metal: bands overlap, always conducting."
+    ];
+
+    let mi = 1; // selected material index (starts at Silicon)
+
+    function lab() {
+      const [n, g] = M[mi];
+      const T = +$("#temp").value;
+
+      $("#tv").textContent = T;
+
+      let f = g < 0 ? 1 : Math.exp(-g / (2 * 8.617e-5 * T));
+      const dots = g < 0 ? 14 : Math.min(14, Math.round(f * 9000));
+
+      $("#egv").textContent = g < 0 ? "0 (overlap)" : g;
+      $("#nv").textContent = g < 0 ? "Free carriers everywhere" : "Excitation factor ≈ " + f.toExponential(1);
+      $("#mnote").textContent = note[mi];
+
+      bands($("#bandSvg"), {
+        gap: g,
+        e: dots,
+        h: g < 0 ? 0 : dots
+      });
+    }
+
+    pills("#matPills", M.map(m => m[0]), i => {
+      mi = i;
+      lab();
+    }, 1);
+
+    $("#temp").oninput = lab;
+
+
+    /* ============ DOPING SECTION ============ */
+
+    const D = [
+      {
+        n: "Intrinsic (pure)",
+        t: "<h3>Intrinsic</h3><p>Pure Si or Ge. Electrons and holes are created in equal numbers by heat, so n = p = nᵢ (about 1.5×10¹⁰ cm⁻³ in Si at 300 K). Fermi level is mid-gap. Conductivity is low.</p>",
+        o: {
+          gap: 1.12,
+          e: 2,
+          h: 2,
+          ef: (t, c, v) => (t + c + v) / 2
+        }
+      },
+      {
+        n: "n-type (donors)",
+        t: "<h3>n-type</h3><p>Add Group V atoms (P, As, Sb) with 5 valence electrons. Four bond; the fifth is released at about 0.045 eV below the conduction band. Electrons are majority carriers, holes minority. Fermi level moves up. n ≈ N_D.</p>",
+        o: {
+          gap: 1.12,
+          e: 10,
+          h: 1,
+          donor: 1,
+          ef: (t, c) => t + c + 14
+        }
+      },
+      {
+        n: "p-type (acceptors)",
+        t: "<h3>p-type</h3><p>Add Group III atoms (B, Al, Ga, In) with 3 valence electrons. Each leaves a missing bond, a hole, at about 0.045 eV above the valence band. Holes are majority carriers. Fermi level moves down. p ≈ N_A.</p>",
+        o: {
+          gap: 1.12,
+          e: 1,
+          h: 10,
+          acc: 1,
+          ef: (t, c, v) => v - 22
+        }
+      }
+    ];
+
+    pills("#dopePills", D.map(d => d.n), i => {
+      $("#dopeText").innerHTML =
+        D[i].t + "<p style='color:var(--muted)'>Mass-action law: n·p = nᵢ² in every case.</p>";
+
+      bands($("#dopeSvg"), D[i].o);
+    });
+
+
+    /* ============ TYPES TABLE ============ */
+
+    const T = [
+      [
+        "Elemental",
+        ["Material", "Eg (eV)", "Gap", "Notes"],
+        [
+          ["Silicon (Si)", "1.12", "Indirect", "ICs, solar panels, about 95% of the market"],
+          ["Germanium (Ge)", "0.67", "Indirect", "Early transistors, infrared optics, SiGe"],
+          ["Carbon (diamond)", "5.5", "Indirect", "Ultra-wide gap, extreme thermal conductivity"],
+          ["Selenium (Se)", "1.7", "Direct", "Photocopiers, old rectifiers"]
+        ]
+      ],
+      [
+        "Compound",
+        ["Material", "Eg (eV)", "Gap", "Notes"],
+        [
+          ["GaAs", "1.42", "Direct", "Fast RF chips, lasers, solar cells (III-V)"],
+          ["InP", "1.34", "Direct", "Fibre-optic lasers and photodetectors"],
+          ["GaN", "3.4", "Direct", "Blue/white LEDs, power electronics"],
+          ["SiC", "3.26", "Indirect", "EV inverters, high-voltage diodes"],
+          ["ZnO", "3.37", "Direct", "Transparent electronics, UV sensors"],
+          ["CdTe", "1.5", "Direct", "Thin-film solar cells (II-VI)"],
+          ["PbS", "0.41", "Direct", "Infrared detectors (IV-VI)"]
+        ]
+      ],
+      [
+        "Other",
+        ["Material", "Type", "Gap", "Notes"],
+        [
+          ["Organic (pentacene, P3HT)", "Carbon-based", "Tunable", "OLED displays, flexible electronics"],
+          ["Metal oxides (IGZO, TiO₂)", "Oxide", "≈3 eV", "Display transistors, photocatalysis"],
+          ["Perovskites", "Hybrid", "1.5–2.3 eV", "Rapidly improving solar cells"],
+          ["MoS₂ and 2D materials", "Layered", "1.2–1.9 eV", "Atom-thin transistors"],
+          ["Amorphous Si", "Non-crystal", "1.7 eV", "Cheap thin-film solar, displays"]
+        ]
+      ]
+    ];
+
+    function tt(i) {
+      const [, h, r] = T[i];
+
+      $("#typeTable").innerHTML =
+        "<tr>" + h.map(x => `<th>${x}</th>`).join("") + "</tr>" +
+        r.map(a => "<tr>" + a.map(x => `<td>${x}</td>`).join("") + "</tr>").join("");
+    }
+
+    pills("#typePills", ["Elemental", "Compound", "Other"].map((x, i) => x), tt);
+
+
+    /* ============ P-N JUNCTION ============ */
+
+    // [name, description, depletion width, current]
+    const B = [
+      [
+        "No bias",
+        "Equilibrium: a built-in potential of about 0.7 V (Si) balances diffusion and drift. Net current is zero.",
+        60,
+        "0"
+      ],
+      [
+        "Forward bias",
+        "Positive to p-side. The barrier shrinks, the depletion region narrows and current rises exponentially.",
+        22,
+        "High"
+      ],
+      [
+        "Reverse bias",
+        "Positive to n-side. The depletion region widens; only a tiny leakage current flows until breakdown.",
+        105,
+        "≈ 0"
+      ]
+    ];
+
+    function pn(i) {
+      const w = B[i][2];
+      const c = 200;
+
+      let h = `
+        <rect x="20" y="30" width="${c - w / 2 - 20}" height="90" fill="var(--a1)" opacity=".3"/>
+        <rect x="${c + w / 2}" y="30" width="${380 - c - w / 2}" height="90" fill="var(--a2)" opacity=".3"/>
+        <rect x="${c - w / 2}" y="30" width="${w}" height="90" fill="var(--a3)" opacity=".35" style="transition:all .4s"/>
+        <text x="40" y="80" fill="var(--text)" font-size="16">p (holes ○)</text>
+        <text x="290" y="80" fill="var(--text)" font-size="16">n (e⁻ ●)</text>
+        <text x="${c}" y="20" text-anchor="middle" fill="var(--text)" font-size="12">depletion region</text>`;
+
+      $("#pnSvg").innerHTML = h;
+      $("#pnText").innerHTML = `<b>${B[i][0]}:</b> ${B[i][1]} Current: <b>${B[i][3]}</b>`;
+    }
+
+    pills("#biasPills", B.map(b => b[0]), pn);
+
+
+    /* ============ APPLICATIONS ============ */
+
+    const A = [
+      ["Diodes and rectifiers", "Allow current one way. Turn AC into DC in every phone charger; Zener diodes regulate voltage."],
+      ["Transistors and ICs", "MOSFETs act as switches and amplifiers. CPUs, GPUs and memory chips pack billions of them."],
+      ["Solar cells", "The photovoltaic effect: photons make electron-hole pairs split by a p-n junction. Si panels reach about 22% efficiency."],
+      ["LEDs and lasers", "Electrons and holes recombine and emit light; colour set by Eg. GaN gives blue, GaAs gives red and infrared."],
+      ["Sensors", "Photodiodes, CCD/CMOS cameras, Hall sensors, thermistors, gas and pressure sensors (MEMS)."],
+      ["Power electronics", "SiC and GaN switches in EV inverters, fast chargers and grids cut energy loss."],
+      ["Memory", "DRAM, NAND flash and SRAM store data as charge in transistor structures."],
+      ["Communication", "GaAs and GaN RF amplifiers in 5G and radar; InP lasers carry internet over fibre."],
+      ["Thermoelectrics", "Bi₂Te₃ converts heat to electricity and cools small devices without moving parts."]
+    ];
+
+    A.forEach(([t, d]) => {
+      const b = document.createElement("button");
+      b.className = "card app";
+      b.innerHTML = `<b>${t}</b><span>${d}</span>`;
+      b.onclick = () => b.classList.toggle("open");
+      $("#appGrid").append(b);
+    });
+
+
+    /* ============ QUIZ ============ */
+
+    // [question, options, index of correct answer]
+    const Q = [
+      ["Which dopant makes silicon n-type?", ["Boron", "Phosphorus", "Gallium"], 1],
+      ["Typical band gap of silicon at 300 K?", ["0.67 eV", "1.12 eV", "3.4 eV"], 1],
+      ["Which material is a direct-gap semiconductor used in LEDs?", ["Silicon", "Germanium", "GaAs"], 2],
+      ["In forward bias the depletion region…", ["Widens", "Narrows", "Disappears completely at 0 V"], 1],
+      ["As temperature rises, a semiconductor’s resistance…", ["Falls", "Rises", "Stays constant"], 0]
+    ];
+
+    let qi = 0; // current question number
+    let sc = 0; // score
+
+    function quiz() {
+      const b = $("#quizBox");
+
+      // Finished: show score
+      if (qi >= Q.length) {
+        b.innerHTML = `<h3>Score: ${sc} / ${Q.length}</h3><button class="btn" id="rs">Try again</button>`;
+
+        $("#rs").onclick = () => {
+          qi = 0;
+          sc = 0;
+          quiz();
+        };
+        return;
+      }
+
+      // Show the current question
+      const [q, o, a] = Q[qi];
+      b.innerHTML = `<p><b>Q${qi + 1}.</b> ${q}</p>`;
+
+      o.forEach((x, i) => {
+        const s = document.createElement("button");
+        s.className = "opt";
+        s.textContent = x;
+
+        s.onclick = () => {
+          // Lock all options and highlight the right one
+          [...b.querySelectorAll(".opt")].forEach((y, j) => {
+            y.disabled = true;
+            if (j == a) y.classList.add("ok");
+          });
+
+          // Score it (or mark wrong)
+          if (i == a) sc++;
+          else s.classList.add("no");
+
+          // Next question after a short pause
+          setTimeout(() => {
+            qi++;
+            quiz();
+          }, 1100);
+        };
+
+        b.append(s);
+      });
+    }
+
+    quiz();
+  </script>
+
+</body>
+</html>
+
